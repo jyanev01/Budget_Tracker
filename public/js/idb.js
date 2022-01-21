@@ -6,7 +6,7 @@ const request = indexedDB.open('budget', 1);
 
 request.onupgradeneeded = function(event) {
     const db = event.target.result;
-    db.createObjectStore('pending', {autoincrement: true});
+    db.createObjectStore('pending', {autoIncrement: true});
 };
 
 request.onsuccess = function(event) {
@@ -28,10 +28,10 @@ function saveRecord(record) {
     // create a transaction on the pending db with readwrite access
     const transaction = db.transaction(['pending'], 'readwrite');
 
-    const budjectObjectStore = transaction.objectStore('pending');
+    const budgectObjectStore = transaction.objectStore('pending');
 
     // add record to your store with add method
-    budjectObjectStore.add(record);
+    budgectObjectStore.add(record);
 }
 
 function checkDatabase() {
@@ -42,12 +42,12 @@ function checkDatabase() {
     const budgetObjectStore = transaction.objectStore('pending');
 
     // get all records from store and set to a variable
-    const getAll = pizzaObjectStore.getAll();
+    const getAll = budgetObjectStore.getAll();
 
     getAll.onsuccess = function() {
         // if there was data in indexedDb's store, let's send it to the api server
         if (getAll.result.length > 0) {
-            fetch('/api/transactions', {
+            fetch('/api/transaction/bulk', {
                 method: 'POST',
                 body: JSON.stringify(getAll.result),
                 headers: {
